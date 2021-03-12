@@ -89,8 +89,8 @@ def createModel(input_data, input_size, sequence_length, slot_size, intent_size,
                                              output_keep_prob=0.5)
 
     embedding = tf.get_variable('embedding', [input_size, layer_size])
-    inputs = tf.nn.embedding_lookup(embedding, input_data)
-
+    inputs = tf.nn.embedding_lookup(embedding, input_data) #随机初始化输入词向量
+    #(output_fw, output_bw) (output_state_fw, output_state_bw)
     state_outputs, final_state = tf.nn.bidirectional_dynamic_rnn(cell_fw, cell_bw, inputs, sequence_length=sequence_length, dtype=tf.float32)
     
     final_state = tf.concat([final_state[0][0], final_state[0][1], final_state[1][0], final_state[1][1]], 1)
